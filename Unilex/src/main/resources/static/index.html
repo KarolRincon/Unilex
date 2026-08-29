@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unilex - Sistema Judicial</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f6f9; color: #1a202c; }
+        main { max-width: 850px; margin: 40px auto; background: white; padding: 32px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h1 { color: #2b6cb0; }
+        button { background: #3182ce; color: white; border: 0; padding: 12px 18px; border-radius: 8px; cursor: pointer; }
+        button:hover { background: #2b6cb0; }
+        li { background: #ebf8ff; margin: 10px 0; padding: 12px; border-radius: 8px; border-left: 4px solid #3182ce; list-style: none; }
+    </style>
+</head>
+<body>
+<main>
+    <h1>Unilex - Panel de Procesos</h1>
+    <p>Monitoreo inteligente de expedientes y actualizaciones judiciales.</p>
+    <button onclick="cargarProcesos()">Consultar Procesos Activos</button>
+    <ul id="listaProcesos"></ul>
+</main>
+
+<script>
+    async function cargarProcesos() {
+        try {
+            // Consumimos el endpoint de Unilex
+            const respuesta = await fetch('/api/procesos');
+            const procesos = await respuesta.json();
+
+            const lista = document.getElementById('listaProcesos');
+            lista.innerHTML = ''; // Limpiar lista
+
+            procesos.forEach(proceso => {
+                const item = document.createElement('li');
+                item.innerHTML = `<strong>Radicado:</strong> ${proceso.radicado} <br> <strong>Despacho:</strong> ${proceso.juzgado}`;
+                lista.appendChild(item);
+            });
+        } catch (error) {
+            alert("Error conectando con la API de Unilex");
+        }
+    }
+</script>
+</body>
+</html>
