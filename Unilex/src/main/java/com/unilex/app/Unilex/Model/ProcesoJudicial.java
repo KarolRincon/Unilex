@@ -7,8 +7,10 @@ public class ProcesoJudicial {
     private String tipoProceso;
     private String estado;
 
+    public ProcesoJudicial() {
+    }
     // Constructor
-    public ProcesoJudicial(Long id, String radicado, String juzgado) {
+    public ProcesoJudicial(Long id, String radicado, String juzgado, String tipoProceso, String estado) {
         this.id = id;
         this.radicado = radicado;
         this.juzgado = juzgado;
