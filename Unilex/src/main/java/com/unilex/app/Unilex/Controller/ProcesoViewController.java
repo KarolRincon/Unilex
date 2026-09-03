@@ -1,5 +1,6 @@
 package com.unilex.app.Unilex.Controller;
 
+import com.unilex.app.Unilex.Model.ProcesoJudicial;
 import com.unilex.app.Unilex. Service.ProcesoJudicialService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

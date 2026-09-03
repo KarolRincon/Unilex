@@ -9,8 +9,8 @@
         body { font-family: Arial, sans-serif; background: #f4f6f9; color: #1a202c; }
         main { max-width: 850px; margin: 40px auto; background: white; padding: 32px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         h1 { color: #2b6cb0; }
-        button { background: #3182ce; color: white; border: 0; padding: 12px 18px; border-radius: 8px; cursor: pointer; }
-        button:hover { background: #2b6cb0; }
+        .btn-link { display: inline-block; background: #3182ce; color: white; padding: 12px 18px; border-radius: 8px; text-decoration: none; font-weight: bold; }
+        .btn-link:hover { background: #2b6cb0; }
         li { background: #ebf8ff; margin: 10px 0; padding: 12px; border-radius: 8px; border-left: 4px solid #3182ce; list-style: none; }
     </style>
 </head>
@@ -18,7 +18,7 @@
 <main>
     <h1>Unilex - Panel de Procesos</h1>
     <p>Monitoreo inteligente de expedientes y actualizaciones judiciales.</p>
-    <button onclick="cargarProcesos()">Consultar Procesos Activos</button>
+    <a href="/procesos" class="btn-link">Consultar Procesos Activos</a>
     <ul id="listaProcesos"></ul>
 </main>
 
