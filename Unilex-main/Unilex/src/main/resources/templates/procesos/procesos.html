@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titulo}">Unilex</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9; margin: 0; padding: 20px; color: #2d3748; }
+        .container { max-width: 1000px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        h1 { color: #1a365d; border-bottom: 3px solid #2b6cb0; padding-bottom: 10px; margin-top: 0; }
+        p.subtitle { color: #4a5568; margin-bottom: 25px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { padding: 14px 16px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+        th { background-color: #ebf8ff; color: #2b6cb0; font-weight: 600; text-transform: uppercase; font-size: 0.85rem; }
+        tr:hover { background-color: #f7fafc; }
+        .badge { background-color: #e2e8f0; color: #2d3748; padding: 4px 8px; border-radius: 6px; font-size: 0.85rem; font-weight: bold; }
+        .badge-activo { background-color: #c6f6d5; color: #22543d; }
+        .badge-pendiente { background-color: #feebc8; color: #744210; }
+        .badge-despacho { background-color: #ebf8ff; color: #2c5282; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 th:text="${titulo}">Gestión de Procesos</h1>
+    <p class="subtitle">Monitoreo dinámico de expedientes judiciales con asistencia de IA - Unilex</p>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Número de Radicado</th>
+            <th>Despacho / Juzgado</th>
+            <th>Tipo de Proceso</th>
+            <th>Estado</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Estructura th:each para iterar sobre la lista de procesos enviada desde el Model -->
+        <tr th:each="proceso : ${procesos}">
+            <td th:text="${proceso.id}">1</td>
+            <td th:text="${proceso.radicado}">11001310300120230012300</td>
+            <td th:text="${proceso.juzgado}">Juzgado 01 Civil</td>
+            <td th:text="${proceso.tipoProceso}">Ejecutivo</td>
+            <td>
+                <span class="badge badge-activo" th:text="${proceso.estado}">Activo</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

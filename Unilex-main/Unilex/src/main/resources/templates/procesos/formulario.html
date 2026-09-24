@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Unilex - Registrar Proceso Judicial</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 30px; background-color: #f4f6f9; }
+        .container { max-width: 600px; background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        input, select { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
+        .error { color: #d9534f; font-size: 0.85em; margin-top: 5px; }
+        .btn { background-color: #0275d8; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; }
+        .btn:hover { background-color: #025aa5; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Unilex: Registro de Proceso Judicial</h2>
+
+    <form th:action="@{/procesos/guardar}" th:object="${procesoDTO}" method="post">
+
+        <div class="form-group">
+            <label for="radicado">Número de Radicado (23 dígitos):</label>
+            <input type="text" id="radicado" th:field="*{radicado}" placeholder="Ej: 11001400300120260000100" />
+            <div class="error" th:if="${#fields.hasErrors('radicado')}" th:errors="*{radicado}">Error Radicado</div>
+        </div>
+
+        <div class="form-group">
+            <label for="demandante">Demandante:</label>
+            <input type="text" id="demandante" th:field="*{demandante}" />
+            <div class="error" th:if="${#fields.hasErrors('demandante')}" th:errors="*{demandante}">Error Demandante</div>
+        </div>
+
+        <div class="form-group">
+            <label for="demandado">Demandado:</label>
+            <input type="text" id="demandado" th:field="*{demandado}" />
+            <div class="error" th:if="${#fields.hasErrors('demandado')}" th:errors="*{demandado}">Error Demandado</div>
+        </div>
+
+        <div class="form-group">
+            <label for="despachoJudicial">Despacho Judicial:</label>
+            <input type="text" id="despachoJudicial" th:field="*{despachoJudicial}" placeholder="Ej: Juzgado 01 Civil Municipal Bogotá" />
+            <div class="error" th:if="${#fields.hasErrors('despachoJudicial')}" th:errors="*{despachoJudicial}">Error Despacho</div>
+        </div>
+
+        <div class="form-group">
+            <label for="estadoActual">Estado del Proceso:</label>
+            <select id="estadoActual" th:field="*{estadoActual}">
+                <option value="">-- Seleccionar --</option>
+                <option value="Admisorio de demanda">Admisorio de demanda</option>
+                <option value="Notificación a las partes">Notificación a las partes</option>
+                <option value="Fijación de fecha de audiencia">Fijación de fecha de audiencia</option>
+                <option value="Sentencia">Sentencia</option>
+            </select>
+            <div class="error" th:if="${#fields.hasErrors('estadoActual')}" th:errors="*{estadoActual}">Error Estado</div>
+        </div>
+
+        <button type="submit" class="btn">Registrar Proceso</button>
+    </form>
+</div>
+</body>
+</html>

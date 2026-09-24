@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Unilex - Lista de Procesos</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 30px; background-color: #f4f6f9; }
+        .container { max-width: 900px; background: white; padding: 25px; border-radius: 8px; }
+        .alert { padding: 12px; background-color: #d4edda; color: #155724; border-radius: 4px; margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #0275d8; color: white; }
+        .btn-link { display: inline-block; margin-top: 15px; text-decoration: none; color: #0275d8; font-weight: bold; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Unilex: Procesos Judiciales Monitoreados</h2>
+
+    <div class="alert" th:if="${mensajeExito}" th:text="${mensajeExito}"></div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Radicado</th>
+            <th>Demandante</th>
+            <th>Demandado</th>
+            <th>Despacho</th>
+            <th>Estado</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="p : ${procesos}">
+            <td th:text="${p.radicado}"></td>
+            <td th:text="${p.demandante}"></td>
+            <td th:text="${p.demandado}"></td>
+            <td th:text="${p.despachoJudicial}"></td>
+            <td th:text="${p.estadoActual}"></td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(procesos)}">
+            <td colspan="5" style="text-align: center;">No hay procesos judiciales registrados.</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a th:href="@{/procesos/nuevo}" class="btn-link">+ Registrar otro proceso</a>
+</div>
+</body>
+</html>
