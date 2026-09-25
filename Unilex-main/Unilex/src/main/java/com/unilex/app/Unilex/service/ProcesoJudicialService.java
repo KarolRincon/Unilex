@@ -1,31 +1,31 @@
 package com.unilex.app.Unilex.service;
 
-import com.unilex.app.Unilex.dto.ProcesoJudicialDTO;
 import com.unilex.app.Unilex.model.ProcesoJudicial;
+import com.unilex.app.Unilex.repository.ProcesoJudicialRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ProcesoJudicialService {
 
-    private final List<ProcesoJudicial> listaProcesos = new ArrayList<>();
-    private Long contadorId = 1L;
+    @Autowired
+    private ProcesoJudicialRepository procesoRepository;
 
     public List<ProcesoJudicial> obtenerTodos() {
-        return listaProcesos;
+        return procesoRepository.findAll();
     }
 
-    public void registrarProcesoDesdeDTO(ProcesoJudicialDTO dto) {
-        ProcesoJudicial nuevo = new ProcesoJudicial(
-                contadorId++,
-                dto.getRadicado(),
-                dto.getDemandante(),
-                dto.getDemandado(),
-                dto.getDespachoJudicial(),
-                dto.getEstadoActual()
-        );
-        listaProcesos.add(nuevo);
+    public ProcesoJudicial obtenerPorId(Long id) {
+        return procesoRepository.findById(id).orElse(null);
+    }
+
+    public ProcesoJudicial guardar(ProcesoJudicial proceso) {
+        return procesoRepository.save(proceso);
+    }
+
+    public void eliminar(Long id) {
+        procesoRepository.deleteById(id);
     }
 }

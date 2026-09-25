@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Unilex - Iniciar Sesión</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #0F172A; }
+        .card-login { max-width: 400px; border-radius: 12px; }
+    </style>
+</head>
+<body class="d-flex align-items-center min-vh-100">
+<div class="container d-flex justify-content-center">
+    <div class="card card-login p-4 w-100 shadow-lg border-0">
+        <div class="text-center mb-4">
+            <h3 class="fw-bold text-dark"><i class="fa-solid fa-scale-balanced text-warning me-2"></i>UNILEX</h3>
+            <p class="text-muted small">Ingresa a tu portal legal</p>
+        </div>
+        <form th:action="@{/procesos/lista}" method="get">
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Correo Electrónico</label>
+                <input type="email" class="form-control" placeholder="abogado@unilex.co" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Contraseña</label>
+                <input type="password" class="form-control" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100 mb-3">Iniciar Sesión</button>
+        </form>
+        <div class="text-center">
+            <span class="small text-muted">¿No tienes cuenta? <a th:href="@{/registro}">Regístrate aquí</a></span>
+        </div>
+    </div>
+</div>
+</body>
+</html>
