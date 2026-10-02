@@ -34,7 +34,6 @@ public class ProcesoJudicial {
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -42,7 +41,6 @@ public class ProcesoJudicial {
     public String getNumeroRadicado() {
         return numeroRadicado;
     }
-
     public void setNumeroRadicado(String numeroRadicado) {
         this.numeroRadicado = numeroRadicado;
     }
@@ -50,7 +48,6 @@ public class ProcesoJudicial {
     public String getDespacho() {
         return despacho;
     }
-
     public void setDespacho(String despacho) {
         this.despacho = despacho;
     }
@@ -58,7 +55,6 @@ public class ProcesoJudicial {
     public String getTipoProceso() {
         return tipoProceso;
     }
-
     public void setTipoProceso(String tipoProceso) {
         this.tipoProceso = tipoProceso;
     }

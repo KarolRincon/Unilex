@@ -16,15 +16,12 @@ public class ProcesoJudicialService {
     public List<ProcesoJudicial> obtenerTodos() {
         return procesoRepository.findAll();
     }
-
     public ProcesoJudicial obtenerPorId(Long id) {
         return procesoRepository.findById(id).orElse(null);
     }
-
     public ProcesoJudicial guardar(ProcesoJudicial proceso) {
         return procesoRepository.save(proceso);
     }
-
     public void eliminar(Long id) {
         procesoRepository.deleteById(id);
     }
