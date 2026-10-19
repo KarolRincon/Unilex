@@ -1,83 +1,56 @@
 package com.unilex.app.Unilex.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class PaginasController {
 
     @GetMapping("/")
-    public String inicio() {
-        return "static/index";
-    }
-
-    @GetMapping("/login")
-    public String login() {
-        return "auth/login";
-    }
-
-    // --- AGREGAR AQUÍ EL CÓDIGO SUBRAYADO ---
-
-    @PostMapping("/login")
-    public String procesarLogin(@RequestParam("email") String email, HttpSession session) {
-        // Al iniciar sesión guarda el nombre en la sesión HTTP de Spring
-        session.setAttribute("usuarioNombre", "Dra. Carolina Martínez");
-        return "redirect:/procesos/lista";
-    }
-
-    @GetMapping("/logout")
-    public String cerrarSesion(HttpSession session) {
-        session.invalidate(); // Limpia la sesión
-        return "redirect:/";
-    }
-
-    // ---------------------------------------
-
-    @GetMapping("/registro")
-    public String registro() {
-        return "auth/registro";
+    public String index() {
+        return "index"; // Retorna index.html
     }
 
     @GetMapping("/quienes-somos")
-    public String quienesSomos(Model model) {
+    public String quienesSomos() {
         return "paginas/quienes-somos";
     }
 
     @GetMapping("/servicios")
-    public String servicios(Model model) {
+    public String servicios() {
         return "paginas/servicios";
     }
 
     @GetMapping("/planes")
-    public String planes(Model model) {
+    public String planes() {
         return "paginas/planes";
     }
 
-    @GetMapping("/consultas")
-    public String consultas(Model model) {
-        return "paginas/consultas";
-    }
-
-    @GetMapping("/actuaciones")
-    public String actuaciones(Model model) {
-        return "procesos/actuaciones";
-    }
-
-    @GetMapping("/asistente-ia")
-    public String asistenteIA(Model model) {
+    @GetMapping("/asistente-legal-ia")
+    public String asistenteLegalIa() {
         return "ia/asistente-ia";
     }
 
-    @GetMapping("/perfil")
-    public String perfil(Model model) {
-        model.addAttribute("usuarioNombre", "Dra. Carolina Martínez");
-        model.addAttribute("email", "carolina.martinez@unilex.co");
-        model.addAttribute("plan", "Plan Pro Legal (Activo)");
-        return "usuario/perfil";
+    @GetMapping("/monitoreo-automatico")
+    public String monitoreoAutomatico() {
+        return "paginas/monitoreo-automatico";
+    }
+
+    @GetMapping("/seguridad-legaltech")
+    public String seguridadLegaltech() {
+        return "paginas/seguridad-legaltech";
+    }
+
+    @GetMapping("/consultas")
+    public String consultas() {
+        return "paginas/consultas";
+    }
+    @GetMapping("/auth/login")
+    public String login() {
+        return "/auth/login";
+    }
+    @GetMapping("/auth/registro")
+    public String registro() {
+        return "/auth/registro";
     }
 }

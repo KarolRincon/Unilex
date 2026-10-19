@@ -1,13 +1,542 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="es">
 <head>
-    <meta charset="UTF-8"><title>Unilex - Quiénes Somos</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNILEX - Quiénes Somos</title>
+    <!-- Iconos FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* 1. Header / Navbar Principal */
+        .navbar {
+            background-color: #0b132b;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        .brand-logo-img {
+            height: 38px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: #d1d5db;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #fca311;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .btn-auth {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 5px;
+            transition: background 0.2s;
+        }
+
+        .btn-auth:hover {
+            background-color: rgba(255, 255, 255, 0.12);
+        }
+
+        .btn-dashboard {
+            background-color: #fca311;
+            color: #000000;
+            font-weight: 700;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+
+        .btn-dashboard:hover {
+            background-color: #e5950f;
+        }
+
+        .btn-logout {
+            color: #f87171;
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 0.4rem 0.6rem;
+            transition: color 0.2s;
+        }
+
+        /* 2. Banner Superior Rediseñado y Minimalista */
+        .hero-banner {
+            background: linear-gradient(135deg, #0b132b 0%, #1e3a8a 50%, #2563eb 100%);
+            color: #ffffff;
+            padding: 4rem 2rem 4.5rem 2rem;
+            text-align: center;
+        }
+
+        .hero-container {
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(253, 163, 17, 0.15);
+            color: #fca311;
+            border: 1px solid rgba(253, 163, 17, 0.3);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+        }
+
+        .hero-text h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 1.2rem;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-text p {
+            font-size: 1.15rem;
+            line-height: 1.7;
+            color: #e2e8f0;
+            font-weight: 400;
+        }
+
+        /* 3. Estructura de Secciones */
+        .content-section {
+            max-width: 1100px;
+            margin: 3.5rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .section-title {
+            text-align: center;
+            color: #0b132b;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: #fca311;
+            margin: 0.5rem auto 0 auto;
+            border-radius: 2px;
+        }
+
+        /* Trayectoria con Animaciones */
+        .history-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .history-card {
+            background: #ffffff;
+            border-radius: 14px;
+            padding: 2.2rem 1.8rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .history-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(37, 99, 235, 0.12);
+            border-color: rgba(37, 99, 235, 0.2);
+        }
+
+        .circle-icon {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+            color: #0284c7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.6rem;
+            margin: 0 auto 1.5rem auto;
+            border: 4px solid #ffffff;
+            box-shadow: 0 6px 15px rgba(2, 132, 199, 0.15);
+            transition: transform 0.35s ease, background 0.35s ease, color 0.35s ease;
+        }
+
+        .history-card:hover .circle-icon {
+            transform: scale(1.08) rotate(5deg);
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: #ffffff;
+        }
+
+        .history-card h3 {
+            font-size: 1.3rem;
+            color: #0b132b;
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+        }
+
+        .history-card p {
+            font-size: 0.94rem;
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        /* Cuadro de Eficiencia con Contadores Animados */
+        .efficiency-banner {
+            background: #0b132b;
+            color: #ffffff;
+            border-radius: 14px;
+            padding: 2.8rem 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+            margin-bottom: 4rem;
+            box-shadow: 0 8px 25px rgba(11, 19, 43, 0.15);
+            position: relative;
+        }
+
+        .stat-item h3 {
+            font-size: 2.8rem;
+            color: #fca311;
+            font-weight: 800;
+            margin-bottom: 0.4rem;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .stat-item p {
+            color: #9ca3af;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        /* Cuadrícula de Pilares */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .value-item {
+            padding: 1.5rem 1rem;
+            border-radius: 12px;
+            transition: background 0.3s ease;
+        }
+
+        .value-item:hover {
+            background: #ffffff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+
+        .value-item i {
+            font-size: 2.5rem;
+            color: #0b132b;
+            margin-bottom: 1rem;
+        }
+
+        .value-item h4 {
+            font-size: 1.15rem;
+            color: #1e293b;
+            margin-bottom: 0.4rem;
+            font-weight: 700;
+        }
+
+        .value-item p {
+            font-size: 0.9rem;
+            color: #64748b;
+            line-height: 1.5;
+        }
+
+        .back-btn-container {
+            text-align: center;
+            margin-top: 2.5rem;
+        }
+
+        .btn-back {
+            background-color: #cbd5e1;
+            color: #1e293b;
+            font-weight: 600;
+            padding: 0.75rem 1.6rem;
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .btn-back:hover {
+            background-color: #94a3b8;
+            transform: translateX(-3px);
+        }
+
+        /* Footer Delgado */
+        footer {
+            margin-top: auto;
+            background-color: #0b132b;
+            color: #9ca3af;
+            text-align: center;
+            padding: 0.8rem 0;
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+    </style>
 </head>
-<body class="container mt-5">
-<div th:replace="~{fragments/navbar :: menuPrincipal}"></div>
-<h2>Quiénes Somos</h2>
-<p class="lead">Unilex es creada por karola.</p>
-<a th:href="@{/procesos/lista}" class="btn btn-secondary">Volver </a>
+<body>
+
+<!-- Menú Superior Principal -->
+<header class="navbar">
+    <a th:href="@{/}" class="navbar-brand">
+        <img th:src="@{/images/logo.png}" src="images/logo.png" alt="UNILEX Logo" class="brand-logo-img" onerror="this.style.display='none'">
+        <i class="fa-solid fa-scale-balanced" style="color: #fca311;"></i>
+        <span>UNILEX</span>
+    </a>
+
+    <ul class="nav-menu">
+        <li><a th:href="@{/quienes-somos}" class="nav-link active">Quiénes somos</a></li>
+        <li><a th:href="@{/servicios}" class="nav-link">Servicios</a></li>
+        <li><a th:href="@{/planes}" class="nav-link">Planes</a></li>
+        <li><a th:href="@{/asistente-legal-ia}" class="nav-link">Asistente IA</a></li>
+    </ul>
+
+    <div class="nav-actions">
+        <th:block sec:authorize="isAnonymous()">
+            <a th:href="@{/auth/login}" class="btn-auth">Iniciar sesión</a>
+            <a th:href="@{/auth/registro}" class="btn-auth">Registrarte</a>
+        </th:block>
+
+        <th:block sec:authorize="isAuthenticated()">
+            <a th:href="@{/procesos}" class="btn-dashboard">
+                <i class="fa-solid fa-folder"></i> Ir al Dashboard
+            </a>
+            <a th:href="@{/logout}" class="btn-logout">Salir</a>
+        </th:block>
+    </div>
+</header>
+
+<!-- Banner de Encabezado  -->
+<section class="hero-banner">
+    <div class="hero-container">
+        <div class="hero-badge">
+            <i class="fa-solid fa-shield-halved"></i> Plataforma LegalTech Colombiana
+        </div>
+        <div class="hero-text">
+            <h1>Quiénes somos</h1>
+            <p>
+                Unilex es una plataforma colombiana de tecnología legal (LegalTech) enfocada en optimizar la gestión de radicados judiciales y potenciar el desempeño de firmas de abogados y profesionales del derecho.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Contenido Principal -->
+<main class="content-section">
+
+    <!-- Evolución con Animaciones Interactivas -->
+    <h2 class="section-title">Nuestra trayectoria</h2>
+    <div class="history-grid">
+        <div class="history-card">
+            <div class="circle-icon">
+                <i class="fa-solid fa-lightbulb"></i>
+            </div>
+            <h3>El Origen</h3>
+            <p>Nacemos para resolver la complejidad y demoras en el seguimiento manual de radicados en la Rama Judicial.</p>
+        </div>
+
+        <div class="history-card">
+            <div class="circle-icon">
+                <i class="fa-solid fa-robot"></i>
+            </div>
+            <h3>Integración IA</h3>
+            <p>Evolucionamos incorporando asistentes de inteligencia artificial para la generación de conceptos y análisis de casos.</p>
+        </div>
+
+        <div class="history-card">
+            <div class="circle-icon">
+                <i class="fa-solid fa-chart-line"></i>
+            </div>
+            <h3>Hoy</h3>
+            <p>Brindamos una solución integral 24/7 con monitoreo automático y persistencia segura de datos para firmas y litigantes.</p>
+        </div>
+    </div>
+
+    <!-- CUADRO DE EFICIENCIA CON CONTADORES ANIMADOS -->
+    <div class="efficiency-banner" id="efficiencyBanner">
+        <div class="stat-item">
+            <h3 class="counter" data-target="24" data-suffix="/7">0</h3>
+            <p>Monitoreo Automático</p>
+        </div>
+        <div class="stat-item">
+            <h3 class="counter" data-target="99.9" data-suffix="%" data-decimals="1">0</h3>
+            <p>Precisión en Radicados</p>
+        </div>
+        <div class="stat-item">
+            <h3 class="counter" data-target="100" data-suffix="%">0</h3>
+            <p>Conexión en Tiempo Real</p>
+        </div>
+        <div class="stat-item">
+            <h3 class="counter" data-target="80" data-prefix="+" data-suffix="%">0</h3>
+            <p>Eficiencia Operativa</p>
+        </div>
+    </div>
+
+    <!-- Cuadrícula de Pilares -->
+    <h2 class="section-title">Nuestros pilares</h2>
+    <div class="values-grid">
+        <div class="value-item">
+            <i class="fa-solid fa-bolt"></i>
+            <h4>Agilidad</h4>
+            <p>Reducimos el tiempo dedicado a consultas manuales.</p>
+        </div>
+        <div class="value-item">
+            <i class="fa-solid fa-shield-halved"></i>
+            <h4>Seguridad</h4>
+            <p>Protección y almacenamiento confiable de la información jurídica.</p>
+        </div>
+        <div class="value-item">
+            <i class="fa-solid fa-brain"></i>
+            <h4>Innovación</h4>
+            <p>Herramientas de IA orientadas a potenciar tu despacho.</p>
+        </div>
+        <div class="value-item">
+            <i class="fa-solid fa-handshake"></i>
+            <h4>Compromiso</h4>
+            <p>Acompañamiento continuo a los profesionales del derecho.</p>
+        </div>
+    </div>
+
+    <!-- Botón Volver -->
+    <div class="back-btn-container">
+        <a th:href="@{/}" class="btn-back">
+            <i class="fa-solid fa-arrow-left"></i> Volver a la página de inicio
+        </a>
+    </div>
+
+</main>
+
+<!-- Pie de página -->
+<footer>
+    <p>&copy; 2026 Unilex LegalTech SaaS. Todos los derechos reservados.</p>
+</footer>
+
+<!-- SCRIPT JS PARA EL CONTADOR ANIMADO -->
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const counters = document.querySelectorAll(".counter");
+        let animated = false;
+
+        const startCounters = () => {
+            counters.forEach(counter => {
+                const target = parseFloat(counter.getAttribute("data-target"));
+                const prefix = counter.getAttribute("data-prefix") || "";
+                const suffix = counter.getAttribute("data-suffix") || "";
+                const decimals = parseInt(counter.getAttribute("data-decimals")) || 0;
+
+                let count = 0;
+                const duration = 2000; // 2 segundos
+                const steps = 60;
+                const increment = target / steps;
+                const stepTime = duration / steps;
+
+                const timer = setInterval(() => {
+                    count += increment;
+                    if (count >= target) {
+                        count = target;
+                        clearInterval(timer);
+                    }
+
+                    const formattedValue = decimals > 0
+                        ? count.toFixed(decimals)
+                        : Math.floor(count);
+
+                    counter.textContent = `${prefix}${formattedValue}${suffix}`;
+                }, stepTime);
+            });
+        };
+
+        // Usa IntersectionObserver para activar la animación cuando el usuario llega al cuadro
+        const banner = document.getElementById("efficiencyBanner");
+        if ("IntersectionObserver" in window) {
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting && !animated) {
+                    animated = true;
+                    startCounters();
+                }
+            }, { threshold: 0.3 });
+            observer.observe(banner);
+        } else {
+            startCounters();
+        }
+    });
+</script>
+
 </body>
 </html>
