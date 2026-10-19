@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNILEX</title>
+    <!-- Diseño -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- Libreria Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-navy: #0F172A;
+            --accent-blue: #1E40AF;
+            --light-bg: #F8FAFC;
+        }
+        body {
+            background-color: var(--light-bg);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .navbar-custom {
+            background-color: var(--primary-navy);
+        }
+        .brand-logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: #FFFFFF !important;
+            letter-spacing: 1px;
+            text-decoration: none;
+        }
+        .hero-section {
+            background: linear-gradient(135deg, #0a192f 0%, #1e3a8a 50%, #2563eb 100%);
+            color: white;
+            padding: 110px 0 80px 0;
+            box-shadow: inset 0 -10px 20px rgba(0,0,0,0.15);
+        }
+        /* Estilo para convertir las tarjetas en elementos interactivos/cliqueables */
+        .card-feature-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            height: 100%;
+        }
+        .card-feature {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+        }
+        .card-feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        .footer-custom {
+            background-color: var(--primary-navy);
+            color: #94A3B8;
+            padding: 14px 0;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+<!-- Navbar Corporativo -->
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top shadow">
+    <div class="container">
+        <!-- Logo (Redirige al Index / Inicio) -->
+        <a class="navbar-brand brand-logo d-flex align-items-center" th:href="@{/}">
+            <i class="fa-solid fa-scale-balanced me-2 text-warning"></i> UNILEX
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <!-- Enlaces a las páginas correspondientes -->
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-3">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/quienes-somos}">Quiénes somos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/servicios}">Servicios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/planes}">Planes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/asistente-ia}">Asistente IA</a>
+                </li>
+            </ul>
+
+            <!-- Autenticación + Botón Dashboard -->
+            <div class="d-flex align-items-center gap-2">
+                <a th:href="@{/login}" class="btn btn-link text-light text-decoration-none btn-sm">Iniciar sesión</a>
+                <a th:href="@{/registro}" class="btn btn-outline-light btn-sm me-2">Registrarse</a>
+                <a th:href="@{/procesos/lista}" class="btn btn-warning btn-sm fw-bold">
+                    <i class="fa-solid fa-folder-open me-1"></i> Ir al Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<header class="hero-section text-center">
+    <div class="container">
+        <h1 class="display-4 fw-bold mb-3">Seguimiento Inteligente de Procesos Judiciales</h1>
+        <p class="lead mb-4 text-light opacity-75 max-w-75 mx-auto">
+            Optimiza la gestión de tus radicados, consulta la Rama Judicial en tiempo real y potencia tu despacho legal con Inteligencia Artificial.
+        </p>
+        <div class="d-flex justify-content-center gap-3">
+            <a th:href="@{/procesos/lista}" class="btn btn-warning btn-lg fw-bold shadow">
+                Gestionar mis Procesos
+            </a>
+            <a th:href="@{/asistente-ia}" class="btn btn-outline-light btn-lg">
+                Probar Asistente IA
+            </a>
+        </div>
+    </div>
+</header>
+
+<!-- Características con Enlaces a sus Páginas Correspondientes -->
+<main class="container my-5 flex-grow-1">
+    <div class="row g-4">
+        <!-- 1. Monitoreo Automático -->
+        <div class="col-md-4">
+            <a th:href="@{/monitoreo-automatico}" class="card-feature-link">
+                <div class="card card-feature p-4 text-center h-100 bg-white">
+                    <div class="text-primary mb-3">
+                        <i class="fa-solid fa-bolt fa-3x"></i>
+                    </div>
+                    <h5 class="fw-bold">Monitoreo Automático</h5>
+                    <p class="text-muted small mb-0">Rastreo de actuaciones y estados de radicados judiciales sin demoras manuales.</p>
+                </div>
+            </a>
+        </div>
+
+        <!-- 2. Asistente Legal IA -->
+        <div class="col-md-4">
+            <a th:href="@{/asistente-legal-ia}" class="card-feature-link">
+                <div class="card card-feature p-4 text-center h-100 bg-white">
+                    <div class="text-primary mb-3">
+                        <i class="fa-solid fa-robot fa-3x text-info"></i>
+                    </div>
+                    <h5 class="fw-bold">Asistente Legal IA</h5>
+                    <p class="text-muted small mb-0">Análisis y generación asistida de conceptos legales para tus casos activos.</p>
+                </div>
+            </a>
+        </div>
+
+        <!-- 3. Seguridad LegalTech -->
+        <div class="col-md-4">
+            <a th:href="@{/seguridad-legaltech}" class="card-feature-link">
+                <div class="card card-feature p-4 text-center h-100 bg-white">
+                    <div class="text-primary mb-3">
+                        <i class="fa-solid fa-shield-halved fa-3x text-success"></i>
+                    </div>
+                    <h5 class="fw-bold">Seguridad LegalTech</h5>
+                    <p class="text-muted small mb-0">Almacenamiento seguro de la información de tu firma con persistencia de datos.</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</main>
+
+<!-- Footer Corporativo -->
+<footer class="footer-custom mt-auto border-top border-secondary border-opacity-25">
+    <div class="container text-center">
+        <p class="mb-0">&copy; 2026 Unilex LegalTech SaaS. Todos los derechos reservados.</p>
+    </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Unilex - Gestión de Procesos</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style> body { background-color: #F8FAFC; padding-top: 80px; } </style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<div th:replace="~{fragments/navbar :: menuPrincipal}"></div>
+
+<div class="container my-4 flex-grow-1">
+
+    <!-- Mensaje Flash al usuario -->
+    <div th:if="${mensajeExito}" class="alert alert-success alert-dismissible fade show shadow-sm mb-3" role="alert">
+        <i class="fa-solid fa-circle-check me-2"></i> <span th:text="${mensajeExito}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="fw-bold text-dark mb-0">Gestión de Procesos Judiciales</h3>
+            <p class="text-muted small mb-0">Monitoreo y seguimiento automatizado de expedientes</p>
+        </div>
+        <a th:href="@{/procesos/nuevo}" class="btn btn-primary shadow-sm">
+            <i class="fa-solid fa-plus me-1"></i> Registrar Nuevo Proceso
+        </a>
+    </div>
+
+    <!-- Barra de Búsqueda -->
+    <form th:action="@{/procesos/lista}" method="get" class="mb-4">
+        <div class="input-group">
+            <input type="text" name="palabraClave" class="form-control" placeholder="Buscar por radicado o despacho..." th:value="${palabraClave}">
+            <button class="btn btn-primary" type="submit"><i class="fa-solid fa-magnifying-glass me-1"></i> Buscar</button>
+            <a th:href="@{/procesos/lista}" class="btn btn-outline-secondary">Limpiar</a>
+        </div>
+    </form>
+
+    <!-- Tabla -->
+    <div class="card border-0 shadow-sm p-3 bg-white rounded-3 mb-3">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Radicado</th>
+                    <th>Despacho</th>
+                    <th>Tipo</th>
+                    <th>Abogado Responsable</th>
+                    <th class="text-center">Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="proceso : ${procesos}">
+                    <td th:text="${proceso.id}"></td>
+                    <td class="font-monospace fw-semibold" th:text="${proceso.numeroRadicado}"></td>
+                    <td th:text="${proceso.despacho}"></td>
+                    <td><span class="badge bg-primary-subtle text-primary border rounded-pill px-3" th:text="${proceso.tipoProceso}"></span></td>
+                    <td th:text="${proceso.abogado != null ? proceso.abogado.nombre : 'Sin asignar'}"></td>
+                    <td class="text-center">
+                        <a th:href="@{/procesos/editar/{id}(id=${proceso.id})}" class="btn btn-sm btn-outline-warning me-1"><i class="fa-solid fa-pen"></i></a>
+                        <a th:href="@{/procesos/eliminar/{id}(id=${proceso.id})}" class="btn btn-sm btn-outline-danger" onclick="return confirm('¿Confirma la eliminación?');"><i class="fa-solid fa-trash"></i></a>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(procesos)}">
+                    <td colspan="6" class="text-center py-4 text-muted">No se encontraron procesos judiciales registrados.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Controles de Paginación -->
+    <div th:if="${totalPaginas > 1}" class="d-flex justify-content-between align-items-center">
+        <span class="small text-muted" th:text="'Mostrando página ' + ${paginaActual} + ' de ' + ${totalPaginas}"></span>
+        <nav>
+            <ul class="pagination pagination-sm mb-0">
+                <li class="page-item" th:classappend="${paginaActual == 1} ? 'disabled'">
+                    <a class="page-link" th:href="@{/procesos/lista(page=${paginaActual - 1}, palabraClave=${palabraClave})}">Anterior</a>
+                </li>
+                <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPaginas)}" th:classappend="${i == paginaActual} ? 'active'">
+                    <a class="page-link" th:href="@{/procesos/lista(page=${i}, palabraClave=${palabraClave})}" th:text="${i}">1</a>
+                </li>
+                <li class="page-item" th:classappend="${paginaActual == totalPaginas} ? 'disabled'">
+                    <a class="page-link" th:href="@{/procesos/lista(page=${paginaActual + 1}, palabraClave=${palabraClave})}">Siguiente</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+</div>
+
+</body>
+</html>
