@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Unilex - Monitoreo Judicial Inteligente</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #F8FAFC; padding-top: 76px; }
+        .hero-section { background: linear-gradient(135deg, #0F172A 0%, #1E3A8A 100%); color: white; padding: 60px 0; }
+        .card-spec { border: none; transition: transform 0.2s, box-shadow 0.2s; border-radius: 12px; }
+        .card-spec:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<!-- Navbar con redirección a la raíz '/' al hacer clic en el logo -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
+    <div class="container">
+        <a class="navbar-brand brand-logo d-flex align-items-center" th:href="@{/}">
+            <i class="fa-solid fa-scale-balanced me-2 text-warning"></i> UNILEX
+        </a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link" th:href="@{/procesos/lista}">Procesos</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/actuaciones}">Actuaciones</a></li>
+                <li class="nav-item"><a class="nav-link text-warning" th:href="@{/asistente-ia}">Asistente IA</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/quienes-somos}">Quiénes Somos</a></li>
+            </ul>
+            <div th:if="${usuarioNombre == null}">
+                <a th:href="@{/login}" class="btn btn-outline-light btn-sm">Iniciar Sesión</a>
+                <a th:href="@{/registro}" class="btn btn-warning btn-sm">Registrarse</a>
+            </div>
+            <div th:if="${usuarioNombre != null}">
+                <a th:href="@{/perfil}" class="btn btn-outline-light btn-sm">
+                    <i class="fa-solid fa-circle-user me-1 text-warning"></i> <span th:text="${usuarioNombre}">Usuario</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="hero-section text-center">
+    <div class="container">
+        <h1 class="fw-bold display-5 mb-3"><i class="fa-solid fa-scale-balanced text-warning me-2"></i>UNILEX</h1>
+        <p class="lead">Sistema Inteligente de Monitoreo Procesal en Colombia</p>
+    </div>
+</div>
+
+<div class="container my-5 flex-grow-1">
+    <div class="text-center mb-4">
+        <h3 class="fw-bold text-dark">Selecciona tu Especialidad Jurídica</h3>
+        <p class="text-muted">Elige tu área para ver procesos e información relevante</p>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <a th:href="@{/procesos/lista}" class="text-decoration-none">
+                <div class="card card-spec p-4 text-center bg-white shadow-sm h-100">
+                    <i class="fa-solid fa-briefcase fa-3x text-primary mb-3"></i>
+                    <h5 class="fw-bold text-dark">Derecho Civil y Comercial</h5>
+                    <p class="small text-muted mb-0">Gestión de procesos ejecutivos, garantías y litigios ordinarios.</p>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a th:href="@{/procesos/lista}" class="text-decoration-none">
+                <div class="card card-spec p-4 text-center bg-white shadow-sm h-100">
+                    <i class="fa-solid fa-users-gear fa-3x text-warning mb-3"></i>
+                    <h5 class="fw-bold text-dark">Derecho Laboral</h5>
+                    <p class="small text-muted mb-0">Seguimiento de fuero, demandas ordinarias laborales y reenganches.</p>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a th:href="@{/procesos/lista}" class="text-decoration-none">
+                <div class="card card-spec p-4 text-center bg-white shadow-sm h-100">
+                    <i class="fa-solid fa-building-columns fa-3x text-success mb-3"></i>
+                    <h5 class="fw-bold text-dark">Derecho Administrativo</h5>
+                    <p class="small text-muted mb-0">Monitoreo ante Tribunales Administrativos y Consejo de Estado.</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
