@@ -1,13 +1,146 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
-    <meta charset="UTF-8"><title>Unilex - Consultas</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNILEX - Módulo de Consultas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+
+        .navbar-unilex {
+            background-color: #0b132b;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .brand-unilex {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        .logo-icon { color: #fca311; }
+
+        .menu-unilex {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .link-unilex {
+            color: #d1d5db;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .link-unilex:hover, .link-unilex.active { color: #ffffff; }
+
+        .actions-unilex {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .btn-auth-unilex {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 5px;
+            transition: background 0.2s;
+        }
+
+        .btn-dash-unilex {
+            background-color: #fca311;
+            color: #000000;
+            font-weight: 700;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+
+        .btn-logout-unilex {
+            color: #f87171;
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 0.4rem 0.6rem;
+        }
+
+        footer {
+            margin-top: auto;
+            background-color: #0b132b;
+            color: #9ca3af;
+            text-align: center;
+            padding: 0.8rem 0;
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+    </style>
 </head>
-<body class="container mt-5">
+<body>
+
 <div th:replace="~{fragments/navbar :: menuPrincipal}"></div>
-<h2>Consultas</h2>
-<p class="lead">Unilex es creada por Karol.</p>
-<a th:href="@{/procesos/lista}" class="btn btn-secondary">Volver </a>
+
+<div class="container my-5 text-center">
+    <div class="card shadow-sm border-0 p-5 mx-auto rounded-3" style="max-width: 750px; background: white;">
+        <i class="fa-solid fa-magnifying-glass text-warning display-4 mb-3"></i>
+        <h2 class="fw-bold text-dark mb-2">Consulta Rápidas de Expedientes</h2>
+        <p class="text-muted mb-4">Monitoreo dinámico y validación de estados procesales con asistencia de IA - Unilex</p>
+
+        <form th:action="@{/procesos/lista}" method="get" class="mb-4">
+            <div class="input-group input-group-lg">
+                <input type="text" name="palabraClave" class="form-control" placeholder="Ingrese el número de radicado o juzgado...">
+                <button class="btn btn-primary px-4" type="submit"><i class="fa-solid fa-search me-1"></i> Consultar</button>
+            </div>
+        </form>
+
+        <div class="d-flex justify-content-center gap-2">
+            <a th:href="@{/procesos/lista}" class="btn btn-outline-primary"><i class="fa-solid fa-folder me-1"></i> Ir al Dashboard</a>
+            <a th:href="@{/}" class="btn btn-outline-secondary"><i class="fa-solid fa-house me-1"></i> Inicio</a>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2026 Unilex. Todos los derechos reservados.</p>
+</footer>
+
 </body>
 </html>

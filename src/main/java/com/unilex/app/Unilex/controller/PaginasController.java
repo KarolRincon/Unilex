@@ -1,56 +1,52 @@
 package com.unilex.app.Unilex.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class PaginasController {
 
     @GetMapping("/")
-    public String index() {
-        return "index"; // Retorna index.html
+    public String inicio(Model model) {
+        return "index";
     }
 
     @GetMapping("/quienes-somos")
-    public String quienesSomos() {
+    public String quienesSomos(Model model) {
         return "paginas/quienes-somos";
     }
 
     @GetMapping("/servicios")
-    public String servicios() {
+    public String servicios(Model model) {
         return "paginas/servicios";
     }
 
     @GetMapping("/planes")
-    public String planes() {
+    public String planes(Model model) {
         return "paginas/planes";
     }
 
-    @GetMapping("/asistente-legal-ia")
-    public String asistenteLegalIa() {
+    @GetMapping("/consultas")
+    public String consultas(Model model) {
+        return "paginas/consultas";
+    }
+
+    @GetMapping("/actuaciones")
+    public String actuaciones(Model model) {
+        return "procesos/actuaciones";
+    }
+
+    @GetMapping("/asistente-ia")
+    public String asistenteIA(Model model) {
         return "ia/asistente-ia";
     }
 
-    @GetMapping("/monitoreo-automatico")
-    public String monitoreoAutomatico() {
-        return "paginas/monitoreo-automatico";
-    }
-
-    @GetMapping("/seguridad-legaltech")
-    public String seguridadLegaltech() {
-        return "paginas/seguridad-legaltech";
-    }
-
-    @GetMapping("/consultas")
-    public String consultas() {
-        return "paginas/consultas";
-    }
-    @GetMapping("/auth/login")
-    public String login() {
-        return "/auth/login";
-    }
-    @GetMapping("/auth/registro")
-    public String registro() {
-        return "/auth/registro";
+    @GetMapping("/perfil")
+    public String perfil(Model model) {
+        model.addAttribute("usuarioNombre", "Dra. Carolina Martínez");
+        model.addAttribute("email", "carolina.martinez@unilex.co");
+        model.addAttribute("plan", "Plan Pro Legal (Activo)");
+        return "usuario/perfil";
     }
 }

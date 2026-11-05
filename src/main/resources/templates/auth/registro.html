@@ -7,47 +7,75 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body { background-color: #0F172A; }
-        .card-register { max-width: 450px; border-radius: 12px; }
+        .card-register { max-width: 480px; border-radius: 12px; }
     </style>
 </head>
 <body class="d-flex align-items-center min-vh-100 py-4">
 <div class="container d-flex justify-content-center">
-
-
-
     <div class="card card-register p-4 w-100 shadow-lg border-0">
 
-        <!-- Botón para regresar al inicio -->
-        <div style="margin-bottom: 1.5rem;">
-            <a th:href="@{/}" style="display: inline-flex; align-items: center; gap: 8px; color: #4b5563; text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;">
-                <i class="fa-solid fa-arrow-left"></i> Volver al inicio
+        <div class="mb-3">
+            <a th:href="@{/}" class="text-decoration-none text-secondary small">
+                <i class="fa-solid fa-arrow-left me-1"></i> Volver al inicio
             </a>
         </div>
 
         <div class="text-center mb-4">
             <h3 class="fw-bold text-dark"><i class="fa-solid fa-scale-balanced text-warning me-2"></i>UNILEX</h3>
-            <p class="text-muted small">Crea tu cuenta profesional</p>
+            <p class="text-muted small">Crea tu cuenta en la plataforma</p>
         </div>
-        <form th:action="@{/login}" method="get">
+
+        <div th:if="${error}" class="alert alert-danger small py-2" th:text="${error}"></div>
+
+        <form th:action="@{/registro}" method="post">
             <div class="mb-3">
                 <label class="form-label fw-semibold">Nombre Completo</label>
-                <input type="text" class="form-control" placeholder="Ej: Karol Rincón" required>
+                <input type="text" name="nombre" class="form-control" placeholder="Ej: Dra. Carolina Martínez" required>
             </div>
             <div class="mb-3">
-                <label class="form-label fw-semibold">Correo Electrónico</label>
-                <input type="email" class="form-control" placeholder="correo@ejemplo.com" required>
+                <label class="form-label fw-semibold">Correo Electrónico / Usuario</label>
+                <input type="email" name="usuario" class="form-control" placeholder="correo@unilex.co" required>
             </div>
             <div class="mb-3">
                 <label class="form-label fw-semibold">Contraseña</label>
-                <input type="password" class="form-control" placeholder="••••••••" required>
+                <input type="password" name="password" class="form-control" placeholder="••••••••" required>
             </div>
+
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Tipo de Perfil</label>
+                <select name="rol" id="selectRol" class="form-select" onchange="toggleEspecialidad()" required>
+                    <option value="CLIENTE">Cliente / Ciudadano</option>
+                    <option value="ABOGADO">Abogado / Especialista Legal</option>
+                </select>
+            </div>
+
+
+            <div class="mb-3 d-none" id="divEspecialidad">
+                <label class="form-label fw-semibold">Especialidad Jurídica</label>
+                <input type="text" name="especialidad" class="form-control" placeholder="Ej: Derecho Civil, Penal, Laboral">
+            </div>
+
             <button type="submit" class="btn btn-primary w-100 mb-3">Crear Cuenta</button>
         </form>
+
         <div class="text-center">
             <span class="small text-muted">¿Ya tienes cuenta? <a th:href="@{/login}">Inicia Sesión</a></span>
         </div>
 
     </div>
 </div>
+
+<script>
+    function toggleEspecialidad() {
+        const rol = document.getElementById("selectRol").value;
+        const divEsp = document.getElementById("divEspecialidad");
+        if (rol === "ABOGADO") {
+            divEsp.classList.remove("d-none");
+        } else {
+            divEsp.classList.add("d-none");
+        }
+    }
+</script>
 </body>
 </html>

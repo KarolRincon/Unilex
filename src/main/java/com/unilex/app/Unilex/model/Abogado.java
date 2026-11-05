@@ -50,4 +50,4 @@ private List<ProcesoJudicial> procesos;
 
     public List<ProcesoJudicial> getProcesos() { return procesos; }
         public void setProcesos(List<ProcesoJudicial> procesos) { this.procesos = procesos; }
-            }
+}

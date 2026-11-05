@@ -1,12 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      lang="es">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UNILEX</title>
-    <!-- Iconos FontAwesome -->
+    <title>UNILEX - Gestión de Procesos Judiciales</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -25,7 +22,6 @@
             min-height: 100vh;
         }
 
-        /* Header / Navbar */
         .navbar {
             background-color: #0b132b;
             display: flex;
@@ -74,7 +70,6 @@
             color: #ffffff;
         }
 
-        /* Acciones de Autenticación y Dashboard */
         .nav-actions {
             display: flex;
             align-items: center;
@@ -124,7 +119,6 @@
             color: #ef4444;
         }
 
-        /* Hero Section */
         .hero-section {
             background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #2563eb 100%);
             color: #ffffff;
@@ -175,7 +169,6 @@
             font-weight: 600;
         }
 
-        /* Cards Section */
         .features-container {
             max-width: 1100px;
             margin: -3.5rem auto 3rem auto;
@@ -214,7 +207,6 @@
             line-height: 1.5;
         }
 
-        /* Footer Delgado */
         footer {
             margin-top: auto;
             background-color: #0b132b;
@@ -228,16 +220,14 @@
 </head>
 <body>
 
-<!-- Menú Superior -->
+
 <header class="navbar">
-    <!-- Logo redirige al index -->
     <a th:href="@{/}" class="navbar-brand">
         <img th:src="@{/images/logo.png}" src="images/logo.png" alt="UNILEX Logo" class="brand-logo-img" onerror="this.style.display='none'">
         <i class="fa-solid fa-scale-balanced" style="color: #fca311;"></i>
         <span>UNILEX</span>
     </a>
 
-    <!-- Menú de Navegación -->
     <ul class="nav-menu">
         <li><a th:href="@{/quienes-somos}" class="nav-link">Quiénes somos</a></li>
         <li><a th:href="@{/servicios}" class="nav-link">Servicios</a></li>
@@ -245,18 +235,21 @@
         <li><a th:href="@{/asistente-legal-ia}" class="nav-link">Asistente IA</a></li>
 
 
+        <th:block th:if="${session.usuarioNombre != null}">
+            <li><a th:href="@{/procesos/lista}" class="nav-link text-warning fw-semibold">Procesos</a></li>
+            <li><a th:href="@{/consultas}" class="nav-link text-warning fw-semibold">Consultas</a></li>
+        </th:block>
     </ul>
 
-
     <div class="nav-actions">
-        <!-- CASO 1: Si NO ha iniciado sesión (Muestra Iniciar sesión y Registrarte) -->
-        <th:block sec:authorize="isAnonymous()">
-            <a th:href="@{/auth/login}" class="btn-auth">Iniciar sesión</a>
-            <a th:href="@{/auth/registro}" class="btn-auth">Registrarte</a>
+
+        <th:block th:if="${session.usuarioNombre == null}">
+            <a th:href="@{/login}" class="btn-auth">Iniciar sesión</a>
+            <a th:href="@{/registro}" class="btn-auth">Registrarte</a>
         </th:block>
 
-        <th:block sec:authorize="isAuthenticated()">
-            <a th:href="@{/procesos}" class="btn-dashboard">
+        <th:block th:if="${session.usuarioNombre != null}">
+            <a th:href="@{/procesos/lista}" class="btn-dashboard">
                 <i class="fa-solid fa-folder"></i> Ir al Dashboard
             </a>
             <a th:href="@{/logout}" class="btn-logout">Salir</a>
@@ -264,7 +257,7 @@
     </div>
 </header>
 
-<!-- Banner Principal -->
+
 <section class="hero-section">
     <h1 class="hero-title">Seguimiento Inteligente de Procesos<br>Judiciales</h1>
     <p class="hero-subtitle">
@@ -276,7 +269,7 @@
     </div>
 </section>
 
-<!-- Secciones Informativas -->
+
 <section class="features-container">
     <div class="feature-card">
         <div class="feature-icon icon-blue">
@@ -303,7 +296,6 @@
     </div>
 </section>
 
-<!-- Pie de página-->
 <footer>
     <p>&copy; 2026 Unilex. Todos los derechos reservados.</p>
 </footer>

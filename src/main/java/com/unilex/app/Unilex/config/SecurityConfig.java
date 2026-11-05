@@ -11,34 +11,27 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        // Páginas públicas que cualquiera puede ver sin iniciar sesión:
                         .requestMatchers(
                                 "/",
+                                "/login",
+                                "/registro",
                                 "/quienes-somos",
                                 "/servicios",
                                 "/planes",
                                 "/asistente-legal-ia",
-                                "/auth/**",
                                 "/images/**",
                                 "/css/**",
-                                "/js/**"
+                                "/js/**",
+                                "/h2-console/**",
+                                "/api/procesos/**"
                         ).permitAll()
-                        // Todas las demás rutas (como el Dashboard o /procesos) requerirán iniciar sesión
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
-                .formLogin(form -> form
-                        .loginPage("/auth/login") // Tu página personalizada de login
-                        .defaultSuccessUrl("/", true) // A dónde redirigir al iniciar sesión con éxito
-                        .permitAll()
-                )
-                .logout(logout -> logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/")
-                        .permitAll()
-                );
+                .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()));
 
         return http.build();
     }

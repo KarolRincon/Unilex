@@ -1,10 +1,12 @@
 package com.unilex.app.Unilex.model;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "procesos_judiciales")
@@ -14,37 +16,61 @@ public class ProcesoJudicial {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "El número de radicado no puede estar vacío")
-    @Size(min = 23, max = 23, message = "El radicado debe contener exactamente 23 dígitos")
-    @Pattern(regexp = "[0-9]+", message = "El radicado solo debe contener números")
     private String numeroRadicado;
-
-    @NotBlank(message = "Debe seleccionar un despacho judicial")
     private String despacho;
-
-    @NotBlank(message = "Debe seleccionar el tipo de proceso")
     private String tipoProceso;
 
-    // Relación ManyToOne con Abogado
-    @NotNull(message = "Debe asignar un abogado responsable")
-    @ManyToOne(fetch = FetchType.LAZY)
+    // Relación con Abogado que faltaba para solucionar el error de Hibernate
+    @ManyToOne
     @JoinColumn(name = "abogado_id")
     private Abogado abogado;
 
-    public ProcesoJudicial() {}
+    // Constructor vacío exigido por JPA
+    public ProcesoJudicial() {
+    }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    // Constructor con parámetros
+    public ProcesoJudicial(Long id, String numeroRadicado, String despacho, String tipoProceso, Abogado abogado) {
+        this.id = id;
+        this.numeroRadicado = numeroRadicado;
+        this.despacho = despacho;
+        this.tipoProceso = tipoProceso;
+        this.abogado = abogado;
+    }
 
-    public String getNumeroRadicado() { return numeroRadicado; }
-    public void setNumeroRadicado(String numeroRadicado) { this.numeroRadicado = numeroRadicado; }
+    // Getters y Setters
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getDespacho() { return despacho; }
-    public void setDespacho(String despacho) { this.despacho = despacho; }
+    public String getNumeroRadicado() {
+        return numeroRadicado;
+    }
+    public void setNumeroRadicado(String numeroRadicado) {
+        this.numeroRadicado = numeroRadicado;
+    }
 
-    public String getTipoProceso() { return tipoProceso; }
-    public void setTipoProceso(String tipoProceso) { this.tipoProceso = tipoProceso; }
+    public String getDespacho() {
+        return despacho;
+    }
+    public void setDespacho(String despacho) {
+        this.despacho = despacho;
+    }
 
-    public Abogado getAbogado() { return abogado; }
-    public void setAbogado(Abogado abogado) { this.abogado = abogado; }
+    public String getTipoProceso() {
+        return tipoProceso;
+    }
+    public void setTipoProceso(String tipoProceso) {
+        this.tipoProceso = tipoProceso;
+    }
+
+    public Abogado getAbogado() {
+        return abogado;
+    }
+    public void setAbogado(Abogado abogado) {
+        this.abogado = abogado;
+    }
 }
