@@ -1,0 +1,2 @@
+Unilex - Plataforma LegalTech de Seguimiento y Gestión Judicial
+Unilex es una aplicación web desarrollada en Spring Boot para optimizar la gestión de radicados judiciales y procesos de despachos legales. La plataforma centraliza el monitoreo de expedientes, permite la búsqueda de radicados y ofrece herramientas de gestión orientadas al sector legal.

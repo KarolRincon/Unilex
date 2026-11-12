@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Unilex - Formulario de Proceso</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #F8FAFC; padding-top: 80px; }
+        .card-form { border-radius: 12px; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    </style>
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: menuPrincipal}"></div>
+<div class="container my-4" style="max-width: 650px;">
+    <div class="card card-form p-4 bg-white">
+        <h4 class="fw-bold mb-3 text-dark">
+            <i class="fa-solid fa-folder-plus text-primary me-2"></i>
+            <span th:text="${proceso.id == null ? 'Registrar Nuevo Proceso' : 'Editar Proceso'}">Formulario</span>
+        </h4>
+        <form th:action="@{/procesos/guardar}" th:object="${proceso}" method="post">
+            <input type="hidden" th:field="*{id}" />
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Número de Radicado (23 dígitos)</label>
+                <input type="text"
+                       class="form-control"
+                       th:field="*{numeroRadicado}"
+                       pattern="[0-9]{23}"
+                       maxlength="23"
+                       oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                       placeholder="Ej: 11001400300120230012300"
+                       required>
+                <div class="form-text">Solo números, exactamente 23 dígitos.</div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Despacho Judicial</label>
+                <select class="form-select" th:field="*{despacho}" required>
+                    <option value="" disabled selected>-- Seleccione un Despacho --</option>
+                    <optgroup label="Juzgados Civiles Circuitos">
+                        <option value="Juzgado 01 Civil del Circuito de Bogotá">Juzgado 01 Civil del Circuito de Bogotá</option>
+                        <option value="Juzgado 05 Civil del Circuito de Bogotá">Juzgado 05 Civil del Circuito de Bogotá</option>
+                        <option value="Juzgado 12 Civil del Circuito de Medellín">Juzgado 12 Civil del Circuito de Medellín</option>
+                    </optgroup>
+                    <optgroup label="Juzgados Laborales Circuitos">
+                        <option value="Juzgado 02 Laboral del Circuito de Bogotá">Juzgado 02 Laboral del Circuito de Bogotá</option>
+                        <option value="Juzgado 08 Laboral del Circuito de Cali">Juzgado 08 Laboral del Circuito de Cali</option>
+                    </optgroup>
+                    <optgroup label="Tribunales y Consejo de Estado">
+                        <option value="Tribunal Administrativo de Cundinamarca">Tribunal Administrativo de Cundinamarca</option>
+                        <option value="Consejo de Estado - Sección Tercera">Consejo de Estado - Sección Tercera</option>
+                    </optgroup>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Tipo de Proceso</label>
+                <select class="form-select" th:field="*{tipoProceso}" required>
+                    <option value="" disabled selected>-- Seleccione el Tipo --</option>
+                    <option value="Ejecutivo Singular">Ejecutivo Singular</option>
+                    <option value="Ordinario Laboral">Ordinario Laboral</option>
+                    <option value="Verbal Sumario">Verbal Sumario</option>
+                    <option value="Acción de Tutela">Acción de Tutela</option>
+                    <option value="Nulidad y Restablecimiento del Derecho">Nulidad y Restablecimiento del Derecho</option>
+                </select>
+            </div>
+
+            <div class="d-flex gap-2 pt-2">
+                <button type="submit" class="btn btn-primary w-100">Guardar Proceso</button>
+                <a th:href="@{/procesos/lista}" class="btn btn-outline-secondary w-100">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

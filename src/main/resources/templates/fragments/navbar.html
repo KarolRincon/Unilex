@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<header th:fragment="menuPrincipal" class="navbar-unilex">
+    <a th:href="@{/}" class="brand-unilex">
+        <i class="fa-solid fa-scale-balanced logo-icon"></i>
+        <span>UNILEX</span>
+    </a>
+
+    <ul class="menu-unilex">
+        <li><a th:href="@{/quienes-somos}" class="link-unilex">Quiénes somos</a></li>
+        <li><a th:href="@{/servicios}" class="link-unilex">Servicios</a></li>
+        <li><a th:href="@{/planes}" class="link-unilex">Planes</a></li>
+        <li><a th:href="@{/asistente-legal-ia}" class="link-unilex">Asistente IA</a></li>
+
+       
+        <th:block th:if="${session.usuarioNombre != null}">
+            <li><a th:href="@{/procesos/lista}" class="link-unilex text-warning fw-semibold">Procesos</a></li>
+            <li><a th:href="@{/consultas}" class="link-unilex text-warning fw-semibold">Consultas</a></li>
+        </th:block>
+    </ul>
+
+    <div class="actions-unilex">
+
+        <a th:href="@{/cambiar-tema?tema=oscuro}"
+           id="btnToggleTema"
+           class="btn btn-outline-light btn-sm me-2"
+           title="Cambiar tema visual">
+            <i class="fa-solid fa-moon" id="iconoTema"></i>
+        </a>
+
+
+        <th:block th:if="${session.usuarioNombre == null}">
+            <a th:href="@{/login}" class="btn-auth-unilex">Iniciar sesión</a>
+            <a th:href="@{/registro}" class="btn-auth-unilex">Registrate</a>
+        </th:block>
+
+
+        <th:block th:if="${session.usuarioNombre != null}">
+            <a th:href="@{/procesos/lista}" class="btn-dash-unilex">
+                <i class="fa-solid fa-folder me-1"></i> Ir al Dashboard
+            </a>
+            <a th:href="@{/logout}" class="btn-logout-unilex">Salir</a>
+        </th:block>
+    </div>
+
+
+    <script>
+        function obtenerCookie(nombre) {
+            const valor = `; ${document.cookie}`;
+            const partes = valor.split(`; ${nombre}=`);
+            if (partes.length === 2) return partes.pop().split(';').shift();
+            return null;
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const tema = obtenerCookie("preferenciaTema");
+            const btnTema = document.getElementById("btnToggleTema");
+            const icono = document.getElementById("iconoTema");
+
+            if (tema === "oscuro") {
+                document.body.classList.add("bg-dark", "text-white");
+                if (icono) {
+                    icono.className = "fa-solid fa-sun text-warning";
+                }
+                if (btnTema) {
+                    btnTema.href = "/cambiar-tema?tema=claro";
+                }
+            } else {
+                document.body.classList.remove("bg-dark", "text-white");
+                if (icono) {
+                    icono.className = "fa-solid fa-moon";
+                }
+                if (btnTema) {
+                    btnTema.href = "/cambiar-tema?tema=oscuro";
+                }
+            }
+        });
+    </script>
+</header>
+
+</body>
+</html>

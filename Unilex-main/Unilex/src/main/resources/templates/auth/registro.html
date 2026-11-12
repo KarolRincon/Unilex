@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Unilex - Registro</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #0F172A; }
+        .card-register { max-width: 450px; border-radius: 12px; }
+    </style>
+</head>
+<body class="d-flex align-items-center min-vh-100 py-4">
+<div class="container d-flex justify-content-center">
+    <div class="card card-register p-4 w-100 shadow-lg border-0">
+        <div class="text-center mb-4">
+            <h3 class="fw-bold text-dark"><i class="fa-solid fa-scale-balanced text-warning me-2"></i>UNILEX</h3>
+            <p class="text-muted small">Crea tu cuenta profesional</p>
+        </div>
+        <form th:action="@{/login}" method="get">
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Nombre Completo</label>
+                <input type="text" class="form-control" placeholder="Ej: Karol Rincón" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Correo Electrónico</label>
+                <input type="email" class="form-control" placeholder="correo@ejemplo.com" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Contraseña</label>
+                <input type="password" class="form-control" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100 mb-3">Crear Cuenta</button>
+        </form>
+        <div class="text-center">
+            <span class="small text-muted">¿Ya tienes cuenta? <a th:href="@{/login}">Inicia Sesión</a></span>
+        </div>
+    </div>
+</div>
+</body>
+</html>
